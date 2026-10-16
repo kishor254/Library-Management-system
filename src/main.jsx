@@ -17,10 +17,15 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 );
 
 // Register Service Worker for PWA Capability
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
+if ('serviceWorker' in navigator && (import.meta.env.PROD || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {
-      // Service worker registration optional in non-https dev
-    });
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then((reg) => {
+        console.log('BookNest PWA Service Worker registered:', reg.scope);
+      })
+      .catch((err) => {
+        console.warn('PWA Service Worker note:', err);
+      });
   });
 }
