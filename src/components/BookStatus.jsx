@@ -1,13 +1,6 @@
-function BookStatus({ available }) {
-  return available ? (
-    <span className="status available">
-      ● Available
-    </span>
-  ) : (
-    <span className="status unavailable">
-      ● Unavailable
-    </span>
-  );
+export default function BookStatus({ available }) {
+return (
+<span className={available ? "book-available" : "book-unavailable"}>
+{available ? "Available" : "Currently Unavailable"} </span>
+);
 }
-
-export default BookStatus;

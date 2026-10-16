@@ -1,24 +1,38 @@
-import { useState, useMemo } from "react";
 
-export function useBooks() {
-  const [books] = useState([
-    { id: 1, title: "React", author: "John", category: "Tech", available: true },
-    { id: 2, title: "Python", author: "Alex", category: "Programming", available: true },
-    { id: 3, title: "Cyber Security", author: "Sam", category: "Security", available: false }
-  ]);
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-  const [search, setSearch] = useState("");
+const API = "http://localhost:3001";
 
-  const filteredBooks = useMemo(() =>
-    books.filter(b =>
-      b.title.toLowerCase().includes(search.toLowerCase()) ||
-      b.author.toLowerCase().includes(search.toLowerCase())
-    ), [books, search]);
+export default function useBooks() {
+  const [books, setBooks] = useState([]);
+  const [members, setMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const availableBooks = useMemo(
-    () => filteredBooks.filter(b => b.available),
-    [filteredBooks]
-  );
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        setError("");
 
-  return { books, search, setSearch, filteredBooks, availableBooks };
+        const [bookResponse, memberResponse] =
+          await Promise.all([
+            axios.get(`${API}/books`),
+            axios.get(`${API}/members`)
+          ]);
+
+        setBooks(bookResponse.data);
+        setMembers(memberResponse.data);
+      } catch {
+        setError("Unable to load library data. Start the API server and try again.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  return { books, members, loading, error };
 }
