@@ -11,18 +11,22 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^7.0.1",
-    "@testing-library/react": "^16.3.3",
-    "jsdom": "^29.1.1",
-    "json-server": "^1.0.0-beta.15",
-    "vitest": "^5.0.4"
-  },
   "dependencies": {
     "@reduxjs/toolkit": "^2.13.0",
     "axios": "^1.20.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-redux": "^9.3.0",
     "react-router-dom": "^7.18.4",
     "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@vitejs/plugin-react": "^6.1.1",
+    "jsdom": "^29.1.1",
+    "json-server": "^1.0.0-beta.15",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.4"
   }
 }
